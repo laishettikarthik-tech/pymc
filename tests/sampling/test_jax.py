@@ -32,6 +32,7 @@ from pytensor.graph import graph_inputs
 
 import pymc as pm
 
+from pymc.exceptions import ImputationWarning
 from pymc.sampling.jax import (
     _blackjax_inference_loop,
     _get_batched_jittered_initial_points,
@@ -550,7 +551,7 @@ class TestBlackjaxProgressBarCompat:
             )
         assert idata.posterior["x"].shape == (1, 10)
 
-   def test_progress_bar_popped_before_window_adaptation(self):
+    def test_progress_bar_popped_before_window_adaptation(self):
         # Directly asserts the ordering fix: progress_bar must never reach
         # blackjax.window_adaptation's kwargs, regardless of blackjax
         # version/API shape.
